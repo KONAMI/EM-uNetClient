@@ -1,0 +1,3 @@
+[submodule "Assets/Scripts/AmUtils"]
+	path = Assets/Scripts/AmUtils
+	url = https://github.com/karinharp/AmUtils
