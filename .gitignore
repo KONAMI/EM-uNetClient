@@ -10,3 +10,7 @@
 */LocalPackageImporter.meta
 */RainbowAssets/*
 */RainbowAssets.meta
+
+# submodule dir meta
+
+Assets/Scripts/AmUtils.meta
