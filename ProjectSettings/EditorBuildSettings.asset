@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/EM-uNetPi-Client/Scenes/ScMenu.unity
+    guid: c558e5bda58f744888bd186358ac7b24
+  - enabled: 1
+    path: Assets/EM-uNetPi-Client/Scenes/ScTitle.unity
+    guid: bb11ba35db9804e67b501f0afd1eff7f
+  - enabled: 1
+    path: Assets/EM-uNetPi-Client/Scenes/ScDelayCheck.unity
+    guid: b7883f2b50e364720ae920ce3652da5e
+  - enabled: 1
+    path: Assets/EM-uNetPi-Client/Scenes/ScBandwidthCheck.unity
+    guid: 5dd258b8488a94053a239ba7c28bf774
+  - enabled: 1
+    path: Assets/EM-uNetPi-Client/Scenes/ScEditProfile.unity
+    guid: 4620107bff98c4ec2a00b5c0007923d9
+  m_configObjects: {}
