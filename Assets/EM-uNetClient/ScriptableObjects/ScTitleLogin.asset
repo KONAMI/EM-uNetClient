@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 354b225b914494b6d9f6310f2533582b, type: 3}
+  m_Name: ScTitleLogin
+  m_EditorClassIdentifier: 
+  flowLabel: Default
+  procList:
+  - procList:
+    - type: 2
+      arg:
+        type: 0
+        funcName: WaitLoginAction
+        argType: 5
+        num: 0
+        str: Login !!!!
+        b: 0
+    seekCond: 4
+    seekWaitTimeMsec: 0
+    seekWaitTriggerKey: LoginAction
+    isLoop: 0
+    loopBreakTriggerKey: 
+  - procList:
+    - type: 2
+      arg:
+        type: 0
+        funcName: Login
+        argType: 5
+        num: 0
+        str: LOGIN PROCESS !!!
+        b: 0
+    - type: 2
+      arg:
+        type: 0
+        funcName: LoginCheck
+        argType: 5
+        num: 0
+        str: 
+        b: 0
+    seekCond: 2
+    seekWaitTimeMsec: 1000
+    seekWaitTriggerKey: 
+    isLoop: 0
+    loopBreakTriggerKey: 
+  - procList:
+    - type: 1
+      arg:
+        type: 0
+        funcName: 
+        argType: 1
+        num: 0
+        str: ScMenu
+        b: 0
+    seekCond: 0
+    seekWaitTimeMsec: 0
+    seekWaitTriggerKey: 
+    isLoop: 0
+    loopBreakTriggerKey: 
+  nextFlowList:
+  - node: {fileID: 11400000, guid: 18125211c3b6142d4b82969bd04a3672, type: 2}
+    isSelected: 0
+  triggerList:
+  - key: LoginAction
+    isOn: 0
+  paramList: []
