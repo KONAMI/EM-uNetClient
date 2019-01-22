@@ -61,8 +61,8 @@ crashlytics-build.properties
 */AssetGraph.meta
 */LocalPackageImporter/*
 */LocalPackageImporter.meta
-*/RainbowAssets/*
-*/RainbowAssets.meta
+*/Plugins/RainbowAssets/*
+*/Plugins/RainbowAssets.meta
 
 # submodule dir meta
 
