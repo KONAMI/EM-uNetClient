@@ -18,6 +18,8 @@ public class ScTitle : ScBase<ScTitleFlow>
 
     [SerializeField]
     TextMeshProUGUI m_uidTf;
+    [SerializeField]
+    TextMeshProUGUI m_versionTf;
     
     protected override void Awake(){
 	base.Awake();
@@ -30,6 +32,7 @@ public class ScTitle : ScBase<ScTitleFlow>
     
     protected async void Start(){
 	m_uidTf.text = "uid : " + system.userManager.userProfile.uid;
+	m_versionTf.text = "version : " + Application.version;
 	await StartFlow();
     }
 
