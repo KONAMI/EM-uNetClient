@@ -29,14 +29,20 @@ public class BandwidthClient : ScriptableObject
 	E_CRITICAL,
     }
     
-    public class ProgressEvent : UnityEvent<int, int, float>{}
+    public class ProgressEvent : UnityEvent<int, float>{}
 
     [SerializeField]
     int m_recvBufSize = 4096;
 
     public class Profile {
-	       
+
+	public Status status { get; set; } = Status.E_CHAOS;
+	
+	public string datSize { get; set; } = "8M";
+	public int duration { get; set; } = 20;
+	
 	public class Node {
+	    public int seq { get; set; } = -1;	    
 	    public int deltaMsec { get; set; } = 0;
 	    public int bytes { get; set; } = 0;
 	    public int kbps { get { return (deltaMsec > 0) ? (int)(8 * 1000 * bytes / 1024 / deltaMsec) : 0; }}
@@ -80,23 +86,26 @@ public class BandwidthClient : ScriptableObject
 	int m_samplingMsec = 100; // 10ミリ秒を割ったらバッファ
 	int m_samplingBuff = 0; // バッファ中の累計
 	
-	public void RecordHandler(int deltaSize){
+	public Node RecordHandler(int deltaSize){
 	    // サンプリング頻度が1msec以下になることもあるので、バッファして、一定までは貯める。
 	    var delta = BenchDelta(m_samplingMsec);
 	    
 	    m_samplingBuff += deltaSize;
 	    
-	    if(delta < 0){ return; }
+	    if(delta < 0){ return null; }
 		
 	    if(m_preWarmingNr > 0){
 		m_samplingBuff = 0;
 		m_preWarmingNr--;		
-		return;
+		return null;
 	    }
-	    
-	    m_lastNode = new Node(){ deltaMsec = delta, bytes = m_samplingBuff };
+
+	    var seq = m_nodeList.Count;
+	    m_lastNode = new Node(){ seq = seq, deltaMsec = delta, bytes = m_samplingBuff };
 	    m_nodeList.Add(m_lastNode);
 	    m_samplingBuff = 0;
+
+	    return m_lastNode;
 	}
 
 	public int median {
@@ -129,16 +138,12 @@ public class BandwidthClient : ScriptableObject
     public async Task<Status> Get(string url){
 
 	var isError = false;
-	int seek    = 0; 
 	m_isAbort   = false;
 	    
 	profile.BenchStart();
 	    
 	using (var client = new HttpClient()){
 		
-	    ++seek;
-	    m_progressEvents.Invoke(seek, 0, 0f);
-	    
 	    var resp = await SendGetQuery(client, url);
 	    if(resp == null){ isError = true; goto wayout; }
 	    
@@ -161,8 +166,9 @@ public class BandwidthClient : ScriptableObject
 		totalBytes += numBytes;
 		var progress = (float)totalBytes / (float)contentLength;
 		m_loadbytes = (int)totalBytes;
-		profile.RecordHandler(numBytes);
-		m_progressEvents.Invoke(seek, 0, progress);
+		var node = profile.RecordHandler(numBytes);
+		var seq = (node == null) ? -1 : node.seq;
+		m_progressEvents.Invoke(seq, progress);
 		if(m_isAbort || isError){ break; }
 	    } while(numBytes > 0);
 	}
@@ -171,14 +177,33 @@ public class BandwidthClient : ScriptableObject
 	
 	profile.BenchEnd();
 	
-	if     (m_isAbort){ return Status.E_INTR; }
-	else if(isError)  { return Status.E_CRITICAL; }
-	else              { return Status.E_OK; }	    
+	//if     (m_isAbort){ profile.status =  Status.E_INTR; }
+	if     (m_isAbort){ profile.status = Status.E_OK; } // 暫定
+	else if(isError)  { profile.status = Status.E_CRITICAL; }
+	else              { profile.status = Status.E_OK; }
+
+	return profile.status;
     }
 
-    public async Task<Status> Post(){
+    public async Task<Status> Post(string url, string datName){
+	
+	var isError = false;
+	m_isAbort   = false;
+	
+	profile.BenchStart();
+
 	await Task.Delay(1000);
-	return Status.E_CHAOS;	    
+
+    wayout:
+	
+	profile.BenchEnd();
+	
+	//if     (m_isAbort){ profile.status =  Status.E_INTR; }
+	if     (m_isAbort){ profile.status = Status.E_OK; } // 暫定
+	else if(isError)  { profile.status = Status.E_CRITICAL; }
+	else              { profile.status = Status.E_OK; }
+
+	return profile.status;
     }
     
     async Task<HttpContent> SendGetQuery(HttpClient client, string url){
@@ -190,6 +215,35 @@ public class BandwidthClient : ScriptableObject
 	if(!resp.IsSuccessStatusCode){
 	    UnityEngine.Debug.Log("> Fail - " + resp.ReasonPhrase + " ( " + resp.StatusCode.ToString() +" )");
 	    return null;
+	}
+	
+	return resp.Content;
+    } 
+
+    async Task<HttpContent> SendPostQuery(HttpClient client, string url, string datName){
+	HttpResponseMessage resp = null;
+	if(url == ""){ return null; }
+
+	string postDat = "";
+	switch(datName){
+	    case "512K": postDat = new string('X', 1024*512);    break;
+	    case "1M":   postDat = new string('X', 1024*1024);   break;
+	    case "2M":   postDat = new string('X', 1024*1024*2); break;
+	    case "4M":   postDat = new string('X', 1024*1024*4); break;
+	    case "8M":   postDat = new string('X', 1024*1024*8); break;
+	}
+	
+	using (var multipart = new MultipartFormDataContent())
+	using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(postDat))) 
+	{
+	    multipart.Add(new StreamContent(ms));
+	    
+	    resp = await client.PostAsync(url, multipart);
+
+	    if(!resp.IsSuccessStatusCode){
+		UnityEngine.Debug.Log("> Fail - " + resp.ReasonPhrase + " ( " + resp.StatusCode.ToString() +" )");
+		return null;
+	    }
 	}
 	
 	return resp.Content;
