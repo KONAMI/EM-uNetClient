@@ -26,29 +26,33 @@ public class InfoClient
 	var resp = new InfoData.Response(){ status = InfoError.E_CHAOS.ToString() };
 	
 	using (var client = new HttpClient()){
+	    try {
+		var response = await client.PostAsync
+		    (
+		     m_apiUrl
+		     , new StringContent
+		     (
+		      JsonSerializer.ToJsonString(new InfoData.Request(){ mode = "load"})
+		      ,new UTF8Encoding()
+		      ,"application/json"
+		      )
+		     );
+		var responseContent = await response.Content.ReadAsStringAsync();
 	    
-	    var response = await client.PostAsync
-		(
-		 m_apiUrl
-		 , new StringContent
-		 (
-		  JsonSerializer.ToJsonString(new InfoData.Request(){ mode = "load"})
-		  ,new UTF8Encoding()
-		  ,"application/json"
-		  )
-		 );
-	    var responseContent = await response.Content.ReadAsStringAsync();
-	    
-	    if(!String.IsNullOrEmpty(responseContent)){
-		resp = JsonSerializer.Deserialize<InfoData.Response>(responseContent);		
+		if(!String.IsNullOrEmpty(responseContent)){
+		    resp = JsonSerializer.Deserialize<InfoData.Response>(responseContent);		
+		}
+		else {
+		    resp.status = InfoError.E_CRITICAL.ToString();
+		}
 	    }
-	    else {
+	    catch(Exception e){
+		//Log("Exception : " + e.ToString());
 		resp.status = InfoError.E_CRITICAL.ToString();
 	    }
 	}
-	
 	return resp;
-    } 
+    }
 
 
     
