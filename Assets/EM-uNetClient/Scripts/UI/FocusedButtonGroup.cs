@@ -36,6 +36,19 @@ public class FocusedButtonGroup : UIBtBase
 
     public Data focusedValue { get { return m_btDef.FirstOrDefault((_p) => _p.isFocused).value; }}
     
+    public void SetDefaultFocus(string value){
+	int idx = 0;
+	for(idx = 0; idx < m_btDef.Count; ++idx){
+	    if(m_btDef[idx].value.str == value){ OnClickHandler(idx); break; }
+	}
+    }
+    public void SetDefaultFocus(int value){
+	int idx = 0;
+	for(idx = 0; idx < m_btDef.Count; ++idx){
+	    if(m_btDef[idx].value.num == value){ OnClickHandler(idx); break; }
+	}
+    }
+    
     public void Awake(){
 	BtDef activeBt = null;
 	if(m_btDef.FirstOrDefault((_p) => _p.isFocused) == null){	    

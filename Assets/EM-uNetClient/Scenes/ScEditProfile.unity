@@ -1408,6 +1408,54 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 142079160}
   m_CullTransparentMesh: 0
+--- !u!1 &167909952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167909954}
+  - component: {fileID: 167909953}
+  m_Layer: 0
+  m_Name: FlowManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &167909953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 167909952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d6f44c8aafa4bf39803a3bb8ac366b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_flowNodePf: {fileID: 11400000, guid: ed5824422ebf34c3097157fd7c6090ca, type: 2}
+  m_isLoop: 0
+  m_fields:
+  - {fileID: 1688660207}
+  - {fileID: 2032160290}
+  - {fileID: 1653544168}
+  - {fileID: 294828359}
+  - {fileID: 2138781594}
+--- !u!4 &167909954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 167909952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &197077458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1510,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Packet Per Seconds
+  m_text: Data Size
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -1531,10 +1579,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 197077460}
-    characterCount: 18
+    characterCount: 9
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 3
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1967,7 +2015,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: packet
+  m_text: M byte
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -2038,8 +2086,8 @@ MonoBehaviour:
     textComponent: {fileID: 234698735}
     characterCount: 6
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -7668,7 +7716,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: packet
+  m_text: M byte
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -7739,8 +7787,8 @@ MonoBehaviour:
     textComponent: {fileID: 919101198}
     characterCount: 6
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -7948,7 +7996,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: packet
+  m_text: M byte
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -8019,8 +8067,8 @@ MonoBehaviour:
     textComponent: {fileID: 923502110}
     characterCount: 6
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -11116,6 +11164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1368722445}
   - component: {fileID: 1368722444}
+  - component: {fileID: 1368722446}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -11136,14 +11185,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isFlowAutoStart: 1
   m_dialog: {fileID: 0}
-  m_fields:
-  - {fileID: 294828359}
-  - {fileID: 1688660207}
-  - {fileID: 2032160290}
-  - {fileID: 1653544168}
-  - {fileID: 392717148}
-  - {fileID: 1000024171}
-  - {fileID: 1855562596}
 --- !u!4 &1368722445
 Transform:
   m_ObjectHideFlags: 0
@@ -11157,6 +11198,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1368722446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1368722443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b76b3a3a35bc47aa87b40ba4f400e2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1382962279
 GameObject:
   m_ObjectHideFlags: 0
@@ -11211,7 +11263,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 30
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -11280,7 +11332,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1382962281}
-    characterCount: 2
+    characterCount: 1
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -13321,7 +13373,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1603731756}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2138781594}
+        m_MethodName: OnClickHandler
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1603731756
@@ -14828,7 +14891,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 10
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -14897,7 +14960,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1714252586}
-    characterCount: 2
+    characterCount: 1
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -15459,7 +15522,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1736867657}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2138781594}
+        m_MethodName: OnClickHandler
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1736867657
@@ -16264,7 +16338,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1850211084}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2138781594}
+        m_MethodName: OnClickHandler
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1850211084
@@ -16871,7 +16956,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 60
+  m_text: 8
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 36311ef2a79fc4972bab0a9927a3848c, type: 2}
   m_sharedMaterial: {fileID: 21446967051779682, guid: 36311ef2a79fc4972bab0a9927a3848c,
@@ -16940,7 +17025,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1920887435}
-    characterCount: 2
+    characterCount: 1
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -18747,13 +18832,14 @@ GameObject:
   - component: {fileID: 2138781591}
   - component: {fileID: 2138781593}
   - component: {fileID: 2138781592}
+  - component: {fileID: 2138781594}
   m_Layer: 5
   m_Name: RadioGroup2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2138781591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18811,6 +18897,39 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2138781590}
   m_CullTransparentMesh: 0
+--- !u!114 &2138781594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2138781590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35561384abcb944e2a52cca934232bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_lock: {fileID: 0}
+  m_key: BandwidthDataSize
+  m_focusTf: {fileID: 102541477}
+  m_btDef:
+  - isFocused: 1
+    focusPos: {x: -94, y: -16}
+    value:
+      b: 0
+      num: 0
+      str: 1M
+  - isFocused: 0
+    focusPos: {x: 0, y: -16}
+    value:
+      b: 0
+      num: 0
+      str: 2M
+  - isFocused: 0
+    focusPos: {x: 94, y: -16}
+    value:
+      b: 0
+      num: 0
+      str: 8M
 --- !u!1 &2144659464
 GameObject:
   m_ObjectHideFlags: 0
