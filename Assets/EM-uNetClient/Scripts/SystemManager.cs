@@ -12,9 +12,6 @@ namespace kde.tech
 public class SystemManager : MonoBehaviour
 {
 
-    ENPManager m_enpManager;
-    public ENPManager enpManager { get { return m_enpManager; }}
-
     UserManagerHelper m_userManagerHelper;
     public UserManagerHelper userManagerHelper { get {
 	    if(m_userManagerHelper == null){ m_userManagerHelper = GetComponent<UserManagerHelper>(); }
@@ -31,6 +28,39 @@ public class SystemManager : MonoBehaviour
             return m_staticConfig;
         }
     }
+
+    UDPingClient.Profile m_delayProfile = null;
+    public UDPingClient.Profile delayProfile {
+        get {
+            if(m_delayProfile == null){ m_delayProfile = new UDPingClient.Profile(); }
+            return m_delayProfile;
+        }
+	set {
+	    m_delayProfile = value;
+	}
+    }
+
+    BandwidthClient.Profile m_bandwidthDwProfile = null;
+    public BandwidthClient.Profile bandwidthDwProfile {
+        get {
+            if(m_bandwidthDwProfile == null){ m_bandwidthDwProfile = new BandwidthClient.Profile(); }
+            return m_bandwidthDwProfile;
+        }
+	set {
+	    m_bandwidthDwProfile = value;
+	}
+    }
+
+    BandwidthClient.Profile m_bandwidthUpProfile = null;
+    public BandwidthClient.Profile bandwidthUpProfile {
+        get {
+            if(m_bandwidthUpProfile == null){ m_bandwidthUpProfile = new BandwidthClient.Profile(); }
+            return m_bandwidthUpProfile;
+        }
+	set {
+	    m_bandwidthUpProfile = value;
+	}
+    }
     
     void Awake(){
 
@@ -43,14 +73,6 @@ public class SystemManager : MonoBehaviour
 	    Screen.fullScreen = false;
 	    Screen.SetResolution(1024, 576, false);
 #endif
-	}
-
-	if(m_enpManager == null){
-	    var pf = Resources.Load("Prefabs/ENPManager") as GameObject;
-	    var go = Instantiate(pf) as GameObject;
-	    go.name = pf.name;
-	    go.transform.parent = gameObject.transform;
-	    m_enpManager = go.GetComponent<ENPManager>();
 	}
 
 #if ENABLE_IL2CPP

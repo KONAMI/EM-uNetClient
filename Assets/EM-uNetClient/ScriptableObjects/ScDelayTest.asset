@@ -37,11 +37,19 @@ MonoBehaviour:
         str: 
         b: 0
     seekCond: 2
-    seekWaitTimeMsec: 1000
+    seekWaitTimeMsec: 3000
     seekWaitTriggerKey: 
     isLoop: 0
     loopBreakTriggerKey: 
   - procList:
+    - type: 2
+      arg:
+        type: 0
+        funcName: CopyProfile
+        argType: 5
+        num: 0
+        str: 
+        b: 0
     - type: 1
       arg:
         type: 0
