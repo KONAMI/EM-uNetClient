@@ -25,7 +25,14 @@ public class FuncObjStaticConfig : FuncObjBase
 
     public ApiEnv currentApiEnv;
     public bool isDebugMode;
-    
+
+    public string debugAuthApiUrl;
+    public string debugStoreApiUrl;
+    public string debugDelayApiUrl;
+    public string debugBandwidthApiUrl;
+    public string debugApiKey;
+    InfoData.ApiInfo m_debugApiInfo = null;
+	
     [Serializable]
     public class EmbededSetting : ListNodeBase {
 	public string   apiUrl;
@@ -54,8 +61,26 @@ public class FuncObjStaticConfig : FuncObjBase
     }
     public InfoData.ApiInfo apiInfo {
 	get {
-	    if(!isSuccess){ return null; }
-	    return m_infoResp.apiInfo;
+	    if(isDebugMode){
+		if(m_debugApiInfo == null){
+		    m_debugApiInfo = new InfoData.ApiInfo();
+		    m_debugApiInfo.key = debugApiKey;
+		    m_debugApiInfo.list = new List<InfoData.ApiInfo.Api>();
+		    m_debugApiInfo.list.Add(new InfoData.ApiInfo.Api(){
+			    name = "auth", url = debugAuthApiUrl });
+		    m_debugApiInfo.list.Add(new InfoData.ApiInfo.Api(){
+			    name = "store", url = debugStoreApiUrl });
+		    m_debugApiInfo.list.Add(new InfoData.ApiInfo.Api(){
+			    name = "delay", url = debugDelayApiUrl });
+		    m_debugApiInfo.list.Add(new InfoData.ApiInfo.Api(){
+			    name = "bandwidth", url = debugBandwidthApiUrl });
+		}
+		return m_debugApiInfo;
+	    }
+	    else {
+		if(!isSuccess){ return null; }
+		return m_infoResp.apiInfo;
+	    }
 	}
     }
     public override async Task Invoke(){

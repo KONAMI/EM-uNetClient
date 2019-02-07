@@ -20,7 +20,15 @@ public class FuncObjStaticConfigInspector : FuncObjInspector<FuncObjStaticConfig
 	DrawSimpleLabelField("EnvSetting", "", EditorStyles.boldLabel);
 	DrawSimpleEnumField(fo, "Env", ref fo.currentApiEnv);
 	DrawSimpleBoolField(fo, "DebugMode", ref fo.isDebugMode);
-	GUILayout.Space(5);	
+	GUILayout.Space(5);
+	GUILayout.Box(GUIContent.none, HrStyle.EditorLine, GUILayout.ExpandWidth(true), GUILayout.Height(1f));
+	GUILayout.Space(5);
+	DrawSimpleTextField(fo, "debugAuthApi", ref fo.debugAuthApiUrl);
+	DrawSimpleTextField(fo, "debugStoreApi", ref fo.debugStoreApiUrl);
+	DrawSimpleTextField(fo, "debugDelayApi", ref fo.debugDelayApiUrl);
+	DrawSimpleTextField(fo, "debugBandwidthApi", ref fo.debugBandwidthApiUrl);
+	DrawSimpleTextField(fo, "debugApiKey", ref fo.debugApiKey);	
+	GUILayout.Space(5);
 	GUILayout.Box(GUIContent.none, HrStyle.EditorLine, GUILayout.ExpandWidth(true), GUILayout.Height(1f));
 	GUILayout.Space(5);	
 
