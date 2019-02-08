@@ -23,6 +23,9 @@ public class ScDelayCheck: ScBase<ScDelayCheckFlow>
     }
     
     protected async void Start(){
+
+	FixCameraViewport();	
+	
 	await StartFlow();
     }    
 }

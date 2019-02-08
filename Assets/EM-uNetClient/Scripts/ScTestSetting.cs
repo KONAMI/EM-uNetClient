@@ -24,6 +24,9 @@ public class ScTestSetting: ScBase<ScTestSettingFlow>
     }
     
     protected async void Start(){
+	
+	FixCameraViewport();
+	
 	await StartFlow();
     }
     

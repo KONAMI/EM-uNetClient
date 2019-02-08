@@ -23,6 +23,9 @@ public class ScBase<FlowNodeManagerT>: MonoBehaviour where FlowNodeManagerT : Fl
 
     [SerializeField]
     protected SimpleDialog m_dialog;
+
+    [SerializeField]
+    protected Camera m_uiCamera;
     
     protected virtual void Awake(){
 	{
@@ -46,6 +49,24 @@ public class ScBase<FlowNodeManagerT>: MonoBehaviour where FlowNodeManagerT : Fl
 	if((flowNodeManager != null) && m_isFlowAutoStart){ await m_pFlowNodeManager.StartFlow(); }
     }
 
+    protected void FixCameraViewport(){
+#if UNITY_ANDROID
+	if(m_uiCamera != null){
+	    float targetRatio = 16f / 9f;	
+	    float currentRatio = Screen.width * 1f / Screen.height;
+	    float ratio = targetRatio / currentRatio;
+	    if(ratio > 1f){
+		float rectY = (ratio - 1.0f) / 2f;
+		m_uiCamera.rect = new Rect (0f, rectY, 1f, ratio);
+	    }
+	    else {
+		float rectX = (1.0f - ratio) / 2f;
+		m_uiCamera.rect = new Rect (rectX, 0f, ratio, 1f);
+	    }
+	}
+#endif	
+    }
+    
     /*
      * 継承先のSceneManagerで実装する
      * ==================================================================

@@ -23,6 +23,9 @@ public class ScBandwidthCheck: ScBase<ScBandwidthCheckFlow>
     }
     
     protected async void Start(){
+	
+	FixCameraViewport();
+	
 	await StartFlow();
     }    
 }

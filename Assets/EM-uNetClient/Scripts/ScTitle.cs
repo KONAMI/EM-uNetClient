@@ -31,6 +31,9 @@ public class ScTitle : ScBase<ScTitleFlow>
     }
     
     protected async void Start(){
+
+	FixCameraViewport();
+	
 	m_uidTf.text = "uid : " + system.userManager.userProfile.uid;
 	m_versionTf.text = "version : " + Application.version;
 	await StartFlow();

@@ -29,6 +29,8 @@ public class ScMenu: ScBase<ScMenuFlow>
     }
     
     protected async void Start(){
+
+	FixCameraViewport();
 	
 	if(system.delayProfile.status == UDPingClient.Status.E_OK){
 	    m_delaySummaryTf.text = "RTT AVG " + system.delayProfile.avg + " msec";

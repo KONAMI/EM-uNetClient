@@ -67,8 +67,14 @@ public class SystemManager : MonoBehaviour
 	DontDestroyOnLoad(gameObject);
 	
 	{
-#if UNITY_ANDROID     
-	    Screen.SetResolution(1024, 576, true);
+#if UNITY_ANDROID
+	    float originRatio  = 16f / 9f;		    
+	    float currentRatio = (float)Screen.width / (float)Screen.height;
+	    int   width        = 1024;
+	    int   height       = 576;
+	    if(currentRatio > originRatio){ width  = (int)(1024 * (currentRatio / originRatio)); }
+	    else                          { height = (int)(576 * (originRatio / currentRatio)); }
+	    Screen.SetResolution(width, height, true);	    
 #else
 	    Screen.fullScreen = false;
 	    Screen.SetResolution(1024, 576, false);
