@@ -239,7 +239,6 @@ public class UDPingClient : IDisposable
 	    
 	    public int rtt {
 		get {
-		    if(isTimeout){ return -1; }		    
 		    return (isTimeout) ? -1 : (int)(recvTime - sendTime);
 		}
 	    }
@@ -267,6 +266,7 @@ public class UDPingClient : IDisposable
 	int m_preWarmingNr   = 10; // 先頭のN個はブレが大きいので落とす。
 
 	public void SendHandler(int seq){
+	    UnityEngine.Debug.Log("SendHandler : " + seq.ToString());
 	    var now = m_sw.ElapsedMilliseconds;
 	    m_nodeList.Add(new Node(){ seq = seq, sendTime = now });
 	}
@@ -278,6 +278,9 @@ public class UDPingClient : IDisposable
 		if(node.recvTime == 0){ node.recvTime = now; }
 		UnityEngine.Debug.Log("RecvHandler : " + seq.ToString() + " > rtt " + node.rtt.ToString());
 	    }
+	    else {
+		UnityEngine.Debug.Log("Inore Packet Seq : " + seq.ToString());
+	    }
 	    return node;
 	}
 	
@@ -285,7 +288,7 @@ public class UDPingClient : IDisposable
 	    var now  = m_sw.ElapsedMilliseconds;	    
 	    var node = m_nodeList.FirstOrDefault(x => x.seq == seq); // @todo 高速化
 	    if(node != null){
-		if(node.recvTime == 0){ node.recvTime = -1; }
+		if(node.recvTime == 0){ node.isTimeout = true; node.recvTime = -1; }
 		else                  { node = null; }
 	    }
 	    return node;
@@ -306,15 +309,14 @@ public class UDPingClient : IDisposable
 	}
 	public int avg {
 	    get {
-		// -1を除外しないとダメなので、要手動計算
-		return (int)m_nodeList.Average(n => n.rtt);		
+		return (int)m_nodeList.Where(n => n.rtt > 0).Average(n => n.rtt);		
 	    }
 	}
 	public float loss {
 	    get {
 		var all     = (float)m_nodeList.Count;
-		var timeout = (float)m_nodeList.Select(n => n.rtt < 0).Count();
-		return (float)Math.Round(1f - timeout/all, 2, MidpointRounding.AwayFromZero);
+		var timeout = (float)m_nodeList.Where(n => n.isTimeout).Count();
+		return (float)Math.Round(timeout/all, 2, MidpointRounding.AwayFromZero);
 	    }
 	}
 	
@@ -334,9 +336,9 @@ public class UDPingClient : IDisposable
 	bool isError = false;
 	int  nr      = profile.pps * profile.duration;
 	m_isAbort   = false;
+      
+	profile.BenchStart(PRE_WARM_PACKET_NR);
 	
-	profile.BenchStart();
-
 	var startMicroSec = profile.now * 1000;
 
 	var body           = new PacketPayload();
@@ -344,19 +346,29 @@ public class UDPingClient : IDisposable
 
 	var payload        = JsonSerializer.Serialize(body);
 	var preWarmCnt     = PRE_WARM_PACKET_NR;
+
+	profile.currentSeq = -preWarmCnt;
 	
 	for(;profile.currentSeq < nr; ++profile.currentSeq){
 	    if(m_isAbort){ break; }
-	    
-	    SendTestPacket(MSG_TYPE_ECHO, profile.currentSeq, payload, payload.Length);
-	    
-	    if(preWarmCnt > 0){ --preWarmCnt; }
-	    else              { profile.SendHandler(profile.currentSeq); }
-	    
-	    var deltaMicroSec = 1000000 * profile.currentSeq / profile.pps;
-	    var waitByMSec    = (int)(((startMicroSec + deltaMicroSec) / 1000) - profile.now);
-	    //UnityEngine.Debug.Log(profile.currentSeq.ToString() + " : " + waitByMSec.ToString());
-	    if(waitByMSec > 0){ await Task.Delay(waitByMSec); }	    
+	    	    	    
+	    if(preWarmCnt > 0){
+		SendTestPacket(MSG_TYPE_ECHO, System.Int32.MaxValue + profile.currentSeq, payload, payload.Length);
+		--preWarmCnt;
+		if(preWarmCnt == 0){ startMicroSec = profile.now * 1000; }
+		
+		var waitByMSec = (int)(1000 / profile.pps);
+		if(waitByMSec > 0){ await Task.Delay(waitByMSec); }
+	    }
+	    else {
+		SendTestPacket(MSG_TYPE_ECHO, profile.currentSeq, payload, payload.Length);
+		profile.SendHandler(profile.currentSeq);
+
+		var deltaMicroSec = 1000000 * (profile.currentSeq + 1) / profile.pps;
+		var waitByMSec    = (int)(((startMicroSec + deltaMicroSec) / 1000) - profile.now);
+		//UnityEngine.Debug.Log(profile.currentSeq.ToString() + " : " + waitByMSec.ToString());	    
+		if(waitByMSec > 0){ await Task.Delay(waitByMSec); }
+	    }
 	}
 	
 	// 最終PacketのTimeoutを待つためにWait
